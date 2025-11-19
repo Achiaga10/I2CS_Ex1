@@ -1,6 +1,8 @@
 package assignments.Ex1;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -128,8 +130,8 @@ class Ex1Test {
 		String sp2 = "3.1x^2 +2.3x -1.1";
 		String sp = Ex1.poly(p);
 		double[] p1 = Ex1.getPolynomFromString(sp);
-		double[] p2 = Ex1.getPolynomFromString(sp2);
-		boolean isSame1 = Ex1.equals(p1, p);
+        double[] p2 = Ex1.getPolynomFromString(sp2);
+        boolean isSame1 = Ex1.equals(p1, p);
 		boolean isSame2 = Ex1.equals(p2, p);
 		if(!isSame1) {fail();}
 		if(!isSame2) {fail();}

@@ -113,10 +113,23 @@ public class Ex1 {
 		String ans = "";
 		if(poly.length==0) {ans="0";}
 		else {
-            /** add you code below
-
-             /////////////////// */
+            ans = ans + poly[0];
+            for (int i = 1; i < poly.length; i++) {
+                if (i == 1){
+                    ans = poly[i]+ "x " + ans;
+                    if (poly[i] >= 0 && i < poly.length-1) {
+                        ans = "+" + ans;
+                    }
+                }
+                else{
+                    ans =  poly[i] + "x^"+ (i) + " " + ans;
+                    if (poly[i] >= 0 && i < poly.length-1) {
+                        ans = "+" + ans;
+                    }
+                }
+            }
 		}
+        System.out.println(ans);
 		return ans;
 	}
 	/**
@@ -182,13 +195,25 @@ public class Ex1 {
 	 * @param p - a String representing polynomial function.
 	 * @return
 	 */
-	public static double[] getPolynomFromString(String p) {
-		double [] ans = ZERO;//  -1.0x^2 +3.0x +2.0
-        /** add you code below
+    public static double[] getPolynomFromString(String p) {
+        String[] words = p.split("\\s+");
+        double [] ans = new double[words.length];//  -1.0x^2 +3.0x +2.0 {2.0, 3.0, -1.0}
+        String charactersToRemove = "[x^+]";
+        for (int i = words.length - 1; i >= 0; i--) {
+            words[i] = words[i].split("x")[0];
+        }
+        for(int i = 0; i < words.length / 2; i++)
+        {
+            String temp = words[i];
+            words[i] = words[words.length - i - 1];
+            words[words.length - i - 1] = temp;
+        }
+        for (int i = 0; i < words.length; i++) {
+            ans[i] = Double.parseDouble(words[i]);
+        }
 
-         /////////////////// */
-		return ans;
-	}
+        return ans;
+    }
 	/**
 	 * This function computes the polynomial function which is the sum of two polynomial functions (p1,p2)
 	 * @param p1
