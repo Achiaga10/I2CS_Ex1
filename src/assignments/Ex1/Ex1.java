@@ -143,9 +143,12 @@ public class Ex1 {
 	 */
 	public static double sameValue(double[] p1, double[] p2, double x1, double x2, double eps) {
 		double ans = x1;
-        /** add you code below
-
-         /////////////////// */
+        double increment = 0.000001;
+        for (double i = x1; i < x2; i+=increment) {
+            if (Math.abs(f(p1,i)) - f(p2,i) <= eps)  {
+                return i;
+            }
+        }
 		return ans;
 	}
 	/**
@@ -277,6 +280,7 @@ public class Ex1 {
         }
 		return ans;
 	}
+
     /**
      * This function reverses a double[] array
      * @param p double[]
