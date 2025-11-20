@@ -165,9 +165,10 @@ public class Ex1 {
 	 */
 	public static double length(double[] p, double x1, double x2, int numberOfSegments) {
 		double ans = x1;
-        /** add you code below
-
-         /////////////////// */
+        double increment = Math.abs(x2 - x1) /  numberOfSegments;
+        for (double i = x1; i < x2; i+=increment) {
+            ans += Math.abs(f(p,i) - f(p,i+increment));
+        }
 		return ans;
 	}
 	
@@ -184,9 +185,13 @@ public class Ex1 {
 	 */
 	public static double area(double[] p1,double[]p2, double x1, double x2, int numberOfTrapezoid) {
 		double ans = 0;
-        /** add you code below
-
-         /////////////////// */
+        double increment = Math.abs(x2 - x1) /  numberOfTrapezoid;
+        for (double i = x1; i < x2; i+=increment) {
+            i = Math.round(i * 100.0) / 100.0;
+            double a = Math.abs(f(p1,i) - f(p2,i));
+            double b = Math.abs(f(p1,i+increment) - f(p2,i+increment));
+            ans = ans + ((a+b) * increment) / 2;
+        }
 		return ans;
 	}
 	/**
