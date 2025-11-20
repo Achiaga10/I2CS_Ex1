@@ -129,7 +129,6 @@ public class Ex1 {
                 }
             }
 		}
-        System.out.println(ans);
 		return ans;
 	}
 	/**
@@ -214,33 +213,56 @@ public class Ex1 {
 
         return ans;
     }
+
 	/**
 	 * This function computes the polynomial function which is the sum of two polynomial functions (p1,p2)
-	 * @param p1
-	 * @param p2
-	 * @return
+     * It does it by iterating the arrays and adding the matching index values into one array.
+	 * @param p1 first polynomial
+	 * @param p2 second polynomial
+	 * @return sum of two polynomial functions (p1,p2)
 	 */
 	public static double[] add(double[] p1, double[] p2) {
 		double [] ans = ZERO;//
-        /** add you code below
-
-         /////////////////// */
-		return ans;
+        int len = Math.max(p1.length, p2.length);
+        if (len == 0) return ans;
+        ans = new double[len];
+        for (int i = 0; i < len; i++) {
+            if (i > p2.length - 1) {
+                ans[i] = p1[i];
+            } else if (i > p1.length - 1) {
+                ans[i] = p2[i];
+            }
+            else{
+                ans[i] = p1[i]+p2[i];
+            }
+        }
+		return reverseArray(ans);
 	}
 	/**
 	 * This function computes the polynomial function which is the multiplication of two polynoms (p1,p2)
-	 * @param p1
-	 * @param p2
-	 * @return
+     * It creates a matrix that is p1.length*p2.length+p1.length-1, then multiply each value at p1 with
+     * each value of p2 then stores the output in the matrix. Then it adds all matrix values to get the
+     * final array of polynomial
+     * @param p1 first polynomial
+     * @param p2 second polynomial
+	 * @return multiplication of two polynoms (p1,p2)
 	 */
 	public static double[] mul(double[] p1, double[] p2) {
 		double [] ans = ZERO;//
-        /** add you code below
-
-         /////////////////// */
-		return ans;
+		double [][] polysToAdd = new double[p1.length][p2.length+p1.length-1];
+        for (int i = 0; i < p1.length; i++) {
+            for (int j = 0; j < p2.length; j++) {
+                polysToAdd[i][i+j] = p1[i]*p2[j];
+            }
+        }
+        ans = reverseArray(add(ans, polysToAdd[0]));
+        for (int i = 1; i < p1.length; i++) {
+            ans = reverseArray(add(ans, polysToAdd[i]));
+        }
+		return reverseArray(ans);
 	}
-	/**
+
+    /**
 	 * This function computes the derivative of the p0 polynomial function.
 	 * @param po
 	 * @return
@@ -252,4 +274,19 @@ public class Ex1 {
          /////////////////// */
 		return ans;
 	}
+    /**
+     * This function reverses a double[] array
+     * @param p double[]
+     * @return p reversed double[]p
+     */
+    public static double[] reverseArray(double[] p) {
+        for (int i = 0; i < p.length / 2; i++) {
+            double temp = p[i];
+            p[i] = p[p.length - i - 1];
+            p[p.length - i - 1] = temp;
+        }
+        return p;
+    }
 }
+//example of poly as array and string
+// double[] p = {-1.1,2.3,3.1}; // 3.1X^2+ 2.3x -1.1
