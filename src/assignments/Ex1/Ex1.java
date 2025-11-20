@@ -264,14 +264,17 @@ public class Ex1 {
 
     /**
 	 * This function computes the derivative of the p0 polynomial function.
+     * It iterates po from the po[1] index, then each value is multiplied by i which represents the power.
 	 * @param po
-	 * @return
+	 * @return array of the derivative of po
 	 */
 	public static double[] derivative (double[] po) {
-		double [] ans = ZERO;//
-        /** add you code below
-
-         /////////////////// */
+		double [] ans = ZERO;
+        if (po.length == 0) return ans;
+        ans = new double[po.length - 1];
+        for (int i = 0; i < ans.length; i++) {
+            ans[i] = po[i+1]*(double)(i+1);
+        }
 		return ans;
 	}
     /**
