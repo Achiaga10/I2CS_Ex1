@@ -19,6 +19,7 @@ public class Ex1 {
 	public static final double EPS = 0.001; // the epsilon to be used for the root approximation.
 	/** The zero polynomial function is represented as an array with a single (0) entry. */
 	public static final double[] ZERO = {0};
+	public static final double[] MINUS_ONE = {-1};
 	/**
 	 * Computes the f(x) value of the polynomial function at x.
 	 * @param poly - polynomial function
@@ -185,15 +186,21 @@ public class Ex1 {
 	 */
 	public static double area(double[] p1,double[]p2, double x1, double x2, int numberOfTrapezoid) {
 		double ans = 0;
-        double increment = Math.abs(x2 - x1) /  numberOfTrapezoid;
-        for (double i = x1; i < x2; i+=increment) {
+        if (numberOfTrapezoid <= 0 || x1 == x2) {
+            return 0.0;
+        }
+        double h = Math.abs(x2 - x1) /  numberOfTrapezoid;
+        for (double i = x1; i < x2; i+=h) {
             i = Math.round(i * 100.0) / 100.0;
             double a = Math.abs(f(p1,i) - f(p2,i));
-            double b = Math.abs(f(p1,i+increment) - f(p2,i+increment));
-            ans = ans + ((a+b) * increment) / 2;
+            double b = Math.abs(f(p1,i+h) - f(p2,i+h));
+            ans = ans + a + b;
         }
+        //calculate (-()/12*n^2) f''(x) max[x1, x2]
+        ans = ans * h / 2;
 		return ans;
 	}
+
 	/**
 	 * This function computes the array representation of a polynomial function from a String
 	 * representation. Note:given a polynomial function represented as a double array,
@@ -244,7 +251,7 @@ public class Ex1 {
                 ans[i] = p1[i]+p2[i];
             }
         }
-		return reverseArray(ans);
+		return ans;
 	}
 	/**
 	 * This function computes the polynomial function which is the multiplication of two polynoms (p1,p2)
@@ -263,11 +270,11 @@ public class Ex1 {
                 polysToAdd[i][i+j] = p1[i]*p2[j];
             }
         }
-        ans = reverseArray(add(ans, polysToAdd[0]));
+        ans = add(ans, polysToAdd[0]);
         for (int i = 1; i < p1.length; i++) {
-            ans = reverseArray(add(ans, polysToAdd[i]));
+            ans = add(ans, polysToAdd[i]);
         }
-		return reverseArray(ans);
+		return ans;
 	}
 
     /**
