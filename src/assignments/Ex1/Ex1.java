@@ -115,6 +115,7 @@ public class Ex1 {
 		if(poly.length==0) {ans="0";}
 		else {
             ans = ans + poly[0];
+            if (poly[0] > 0) {ans ="+" + poly[0];}
             for (int i = 1; i < poly.length; i++) {
                 if (i == 1){
                     ans = poly[i]+ "x " + ans;
@@ -143,15 +144,15 @@ public class Ex1 {
 	 * @return an x value (x1<=x<=x2) for which |p1(x) - p2(x)| < eps.
 	 */
 	public static double sameValue(double[] p1, double[] p2, double x1, double x2, double eps) {
-		double ans = x1;
         double increment = 0.000001;
         for (double i = x1; i < x2; i+=increment) {
-            if (Math.abs(f(p1,i)) - f(p2,i) <= eps)  {
+            if (Math.abs(f(p1,i) - f(p2,i)) < eps){
                 return i;
             }
         }
-		return ans;
+		return x1;
 	}
+
 	/**
 	 * Given a polynomial function (p), a range [x1,x2] and an integer with the number (n) of sample points.
 	 * This function computes an approximation of the length of the function between f(x1) and f(x2) 
@@ -184,23 +185,39 @@ public class Ex1 {
 	 * @param numberOfTrapezoid - a natural number representing the number of Trapezoids between x1 and x2.
 	 * @return the approximated area between the two polynomial functions within the [x1,x2] range.
 	 */
-	public static double area(double[] p1,double[]p2, double x1, double x2, int numberOfTrapezoid) {
-		double ans = 0;
-        if (numberOfTrapezoid <= 0 || x1 == x2) {
-            return 0.0;
-        }
+    public static double area(double[] p1,double[]p2, double x1, double x2, int numberOfTrapezoid) {
+        double ans = 0;
+        if (numberOfTrapezoid <= 0 || x1 == x2) return 0.0;
         double h = Math.abs(x2 - x1) /  numberOfTrapezoid;
-        for (double i = x1; i < x2; i+=h) {
-            i = Math.round(i * 100.0) / 100.0;
-            double a = Math.abs(f(p1,i) - f(p2,i));
-            double b = Math.abs(f(p1,i+h) - f(p2,i+h));
-            ans = ans + a + b;
+        if (Math.abs(f(p1,x1) - f(p2,x1)) < EPS) {
+            double startBase = Math.abs(f(p1,x1+h) - f(p2,x1+h));
+            ans = startBase*h/2;
+            System.out.println("Starting with crossed point");
+            x1 += h;
         }
-        //calculate (-()/12*n^2) f''(x) max[x1, x2]
-        ans = ans * h / 2;
-		return ans;
-	}
 
+        double middleX;
+        for (double i = x1; i < x2; i+=h) {
+            middleX = sameValue(p1, p2, i, i+h, 0.00001);
+            if (middleX != i){
+                double baseA = Math.abs(f(p1,i) - f(p2,i));
+                double ha = Math.abs(middleX - i);
+                ans += baseA * ha / 2;
+
+                double baseB = Math.abs(f(p1,i+h) - f(p2,i+h));
+                double hb = Math.abs(i+h-middleX);
+                ans += baseB * hb / 2;
+            }
+            else{
+                double a =  Math.abs(f(p1,i) - f(p2,i));
+                double b =  Math.abs(f(p1,i+h) - f(p2,i+h));
+
+                ans += (a+b) * h / 2;
+            }
+
+        }
+        return ans;
+    }
 	/**
 	 * This function computes the array representation of a polynomial function from a String
 	 * representation. Note:given a polynomial function represented as a double array,
