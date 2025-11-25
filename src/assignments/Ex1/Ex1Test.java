@@ -1,8 +1,6 @@
 package assignments.Ex1;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -205,14 +203,17 @@ class Ex1Test {
         assertEquals(a1,area, Ex1.EPS);
     }
 
-//    @Test
-//    public void derivativeTest(){
-//        double[] po_a = Ex1.derivative(new double[]{2,1,-0.7, -0.02,0.02});
-//        double[] po_b = new double[]{1,-1.4, -0.06,0.08};
-//
-//
-//        assertEquals(po_a,po_b);
-//    }
+    @Test
+    /**
+     * Test the derivative function
+     */
+    public void derivativeTest(){
+        double[] po_a = Ex1.derivative(new double[]{2,1,-0.7, -0.02,0.02});
+        double[] result = {1,-1.4, -0.06,0.08};
+
+        assertArrayEquals(po_a,result);
+    }
+
 
     @Test
     /**
@@ -260,6 +261,45 @@ class Ex1Test {
         double [] result = Ex1.PolynomFromPoints(xx, yy);
 
         assertArrayEquals(result, poly, 1e-6);
+    }
+
+    @Test
+    /**
+     * Test rootRec function
+     */
+    public void rootRecTest() {
+        double[] po_a = {1,-1.4, -0.06,0.08};
+
+        double ans = Ex1.root_rec(po_a, -5, -3, Ex1.EPS);
+        assertEquals(ans, -4.16808, Ex1.EPS);
+
+        ans = Ex1.root_rec(po_a, 0, 2, Ex1.EPS);
+        assertEquals(ans, 0.71322, Ex1.EPS);
+
+        ans = Ex1.root_rec(po_a, 3, 5, Ex1.EPS);
+        assertEquals(ans, 4.20487, Ex1.EPS);
+    }
+
+    /**
+     * Test length function
+     */
+    @Test
+    public void lengthTest() {
+        double[] po_a = {1,-1.4, -0.06,0.08};
+        double ans = Ex1.length(po_a, -3.82, 0, 100);
+        assertEquals(ans, 5.6721143, Ex1.EPS*10);
+
+    }
+
+    /**
+     * Test length function
+     */
+    @Test
+    public void lengthTest2() {
+        double[] p = {0.0, 0.0, 1.0}; // Represents f(x) = x^2
+        double ans = Ex1.length(p, 0, 2, 10);
+        assertEquals(ans, 4.6465, Ex1.EPS*10);
+
     }
 
 }

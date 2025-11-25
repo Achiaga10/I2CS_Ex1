@@ -19,7 +19,7 @@ public class Ex1 {
 	public static final double EPS = 0.001; // the epsilon to be used for the root approximation.
 	/** The zero polynomial function is represented as an array with a single (0) entry. */
 	public static final double[] ZERO = {0};
-	public static final double[] MINUS_ONE = {-1};
+
 	/**
 	 * Computes the f(x) value of the polynomial function at x.
 	 * @param poly - polynomial function
@@ -34,9 +34,10 @@ public class Ex1 {
 		}
 		return ans;
 	}
-	/** Given a polynomial function (p), a range [x1,x2] and an epsilon eps.
+
+    /** Given a polynomial function (p), a range [x1,x2] and an epsilon eps.
 	 * This function computes an x value (x1<=x<=x2) for which |p(x)| < eps, 
-	 * assuming p(x1)*p(x2) <= 0.
+	 * assuming p(x1)*p(x2) <= 0. Basically finds when the function goes from (+) value to (-) and vise versa
 	 * This function should be implemented recursively.
 	 * @param p - the polynomial function
 	 * @param x1 - minimal value of the range
@@ -52,13 +53,14 @@ public class Ex1 {
 		if(f12*f1<=0) {return root_rec(p, x1, x12, eps);}
 		else {return root_rec(p, x12, x2, eps);}
 	}
-	/**
+
+    /**
 	 * This function computes a polynomial representation from a set of 2D points on the polynom.
 	 * The solution is based on: //	http://stackoverflow.com/questions/717762/how-to-calculate-the-vertex-of-a-parabola-given-three-points
 	 * Note: this function only works for a set of points containing up to 3 points, else returns null.
      * The function calculates the coefficients using the Gauss algorithm for matrix.
-	 * @param xx
-	 * @param yy
+	 * @param xx - array of x's values that goes accordingly with yy, for exp: {1,-6,0.3}
+	 * @param yy - array of y's values that goes accordingly with xx, for exp: {0,2,-9}
 	 * @return an array of doubles representing the coefficients of the polynom.
 	 */
 	public static double[] PolynomFromPoints(double[] xx, double[] yy) {
@@ -119,7 +121,7 @@ public class Ex1 {
      * where n is the max degree (over p1, p2) - up to an epsilon (aka EPS) value.
      * @param p1 first polynomial function
      * @param p2 second polynomial function
-     * @return true iff p1 represents the same polynomial function as p2.
+     * @return true if p1 represents the same polynomial function as p2.
      */
 	public static boolean equals(double[] p1, double[] p2) {
 		boolean ans = true;
@@ -148,7 +150,7 @@ public class Ex1 {
 	 * Computes a String representing the polynomial function.
 	 * For example the array {2,0,3.1,-1.2} will be presented as the following String  "-1.2x^3 +3.1x^2 +2.0"
 	 * @param poly the polynomial function represented as an array of doubles
-	 * @return String representing the polynomial function:
+	 * @return String representing the polynomial function
 	 */
 	public static String poly(double[] poly) {
 		String ans = "";
@@ -173,7 +175,8 @@ public class Ex1 {
 		}
 		return ans;
 	}
-	/**
+
+    /**
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an epsilon eps. This function computes an x value (x1<=x<=x2)
 	 * for which |p1(x) -p2(x)| < eps, assuming (p1(x1)-p2(x1)) * (p1(x2)-p2(x2)) <= 0.
 	 * @param p1 - first polynomial function
@@ -205,20 +208,37 @@ public class Ex1 {
 	 * @param numberOfSegments - (A positive integer value (1,2,...).
 	 * @return the length approximation of the function between f(x1) and f(x2).
 	 */
-	public static double length(double[] p, double x1, double x2, int numberOfSegments) {
-		double ans = x1;
-        double increment = Math.abs(x2 - x1) /  numberOfSegments;
-        for (double i = x1; i < x2; i+=increment) {
-            ans += Math.abs(f(p,i) - f(p,i+increment));
+    public static double length(double[] p, double x1, double x2, int numberOfSegments) {
+        if (numberOfSegments <= 0 || x1 >= x2) {
+            if (x1 == x2) return 0.0;
+            return 0.0;
         }
-		return ans;
-	}
-	
+
+        double deltaX = (x2 - x1) / numberOfSegments;
+        double ans = 0.0;
+        double currentY = f(p, x1);
+
+        for (int i = 1; i <= numberOfSegments; i++) {
+            double nextX = x1 + i * deltaX;
+            double nextY = f(p, nextX);
+            double deltaY = nextY - currentY;
+
+            //Math.sqrt(deltaX * deltaX + deltaY * deltaY)
+            double segmentLength = Math.hypot(deltaX, deltaY);
+            ans += segmentLength;
+
+            currentY = nextY;
+        }
+        return ans;
+    }
+
 	/**
 	 * Given two polynomial functions (p1,p2), a range [x1,x2] and an integer representing the number of Trapezoids between the functions (number of samples in on each polynom).
 	 * This function computes an approximation of the area between the polynomial functions within the x-range.
 	 * The area is computed using Riemann's like integral (https://en.wikipedia.org/wiki/Riemann_integral)
-	 * @param p1 - first polynomial function
+	 * And for extra accurecey when there is an intersection point it computes two triangles from both side
+     * of the intersection.
+     * @param p1 - first polynomial function
 	 * @param p2 - second polynomial function
 	 * @param x1 - minimal value of the range
 	 * @param x2 - maximal value of the range
@@ -258,13 +278,14 @@ public class Ex1 {
         }
         return ans;
     }
-	/**
+
+    /**
 	 * This function computes the array representation of a polynomial function from a String
 	 * representation. Note:given a polynomial function represented as a double array,
 	 * getPolynomFromString(poly(p)) should return an array equals to p.
 	 * 
 	 * @param p - a String representing polynomial function.
-	 * @return
+	 * @return double [] representing the polynomial function: for: '-1.0x^2 +3.0x +2.0' -> {2.0, 3.0, -1.0}
 	 */
     public static double[] getPolynomFromString(String p) {
         String[] words = p.split("\\s+");
