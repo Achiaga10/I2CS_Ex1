@@ -85,6 +85,7 @@ public class Ex1 {
                         }
                     }
                 }
+
                 double divisor = matrix[i][i];
                 for (int z=0; z < matrix[i].length; z++) {
                     matrix[i][z] = matrix[i][z] / divisor;

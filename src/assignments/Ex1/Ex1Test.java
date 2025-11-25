@@ -248,6 +248,7 @@ class Ex1Test {
 
         assertArrayEquals(result, poly, 1e-6);
     }
+
     @Test
     /**
      * Test the PolynomFromPoints function with 2 points edge case with point(0,0).
