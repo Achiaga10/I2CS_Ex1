@@ -204,4 +204,61 @@ class Ex1Test {
         double area = 58.5658;
         assertEquals(a1,area, Ex1.EPS);
     }
+
+//    @Test
+//    public void derivativeTest(){
+//        double[] po_a = Ex1.derivative(new double[]{2,1,-0.7, -0.02,0.02});
+//        double[] po_b = new double[]{1,-1.4, -0.06,0.08};
+//
+//
+//        assertEquals(po_a,po_b);
+//    }
+
+    @Test
+    /**
+     * Test the PolynomFromPoints function with 3 points.
+     */
+    public void testPolynomFromPoints() {
+        double[] xx = {1, -1, 0};
+        double[] yy = {3, 3, 2};
+        double[] poly = { 2, 0, 1};
+        double [] result = Ex1.PolynomFromPoints(xx, yy);
+        assertArrayEquals(result, poly, 1e-6);
+    }
+    @Test
+    /**
+     * Test the PolynomFromPoints function with 3 points edge case with point(0,0).
+     */
+    public void testPolynomFromPoints2() {
+        double[] xx = {0, -1, 1};
+        double[] yy = {0, 5, 1};
+        double[] poly = {0, -2, 3};
+        double [] result = Ex1.PolynomFromPoints(xx, yy);
+        assertArrayEquals(result, poly, 1e-6);
+    }
+    @Test
+    /**
+     * Test the PolynomFromPoints function with 2 points.
+     */
+    public void testPolynomFromPoints3() {
+        double[] xx = new double[]{2, 5};
+        double[] yy = new double[]{1, 7};
+        double[] poly = {-3, 2};
+        double [] result = Ex1.PolynomFromPoints(xx, yy);
+
+        assertArrayEquals(result, poly, 1e-6);
+    }
+    @Test
+    /**
+     * Test the PolynomFromPoints function with 2 points edge case with point(0,0).
+     */
+    public void testPolynomFromPoints4() {
+        double[] xx = new double[]{0, 4};
+        double[] yy = new double[]{0, -6};
+        double[] poly = {0, -1.5};
+        double [] result = Ex1.PolynomFromPoints(xx, yy);
+
+        assertArrayEquals(result, poly, 1e-6);
+    }
+
 }

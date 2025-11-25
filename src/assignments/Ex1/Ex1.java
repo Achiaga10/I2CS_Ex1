@@ -56,6 +56,7 @@ public class Ex1 {
 	 * This function computes a polynomial representation from a set of 2D points on the polynom.
 	 * The solution is based on: //	http://stackoverflow.com/questions/717762/how-to-calculate-the-vertex-of-a-parabola-given-three-points
 	 * Note: this function only works for a set of points containing up to 3 points, else returns null.
+     * The function calculates the coefficients using the Gauss algorithm for matrix.
 	 * @param xx
 	 * @param yy
 	 * @return an array of doubles representing the coefficients of the polynom.
@@ -64,15 +65,53 @@ public class Ex1 {
 		double [] ans = null; // {x,x2,x3}
 		int lx = xx.length;// {y,y2,y3}
 		int ly = yy.length;
+        double [][] matrix = new double[lx][lx+1];
 		if(xx!=null && yy!=null && lx==ly && lx>1 && lx<4) {
             for (int i = 0; i < lx; i++) {
-
-            //y = ax^2+bx+c
-            //y = ax^2+bx+c
-            //y = ax^2+bx+c
+                if (lx == 3){
+                    matrix[i] = new double[]{Math.pow(xx[i], 2), xx[i], 1, yy[i]};
+                } else{
+                    matrix[i] = new double[]{xx[i], 1, yy[i]};
+                }
             }
+            for (int i=0; i < matrix.length - 1; i++) {
+                if(matrix[i][i]==0){
+                    for (int j=i+1; j < matrix.length; j++) {
+                        if(matrix[j][i]!=0) {
+                            double[] tmp = matrix[i];
+                            matrix[i] = matrix[j];
+                            matrix[j] = tmp;
+                            break;
+                        }
+                    }
+                }
+                double divisor = matrix[i][i];
+                for (int z=0; z < matrix[i].length; z++) {
+                    matrix[i][z] = matrix[i][z] / divisor;
+                }
+                for (int j = 1+i; j < matrix.length; j++) {
+                    double makeItZero = matrix[j][i] / matrix[i][i];
+                    for(int k=i; k < matrix[j].length; k++){
+                        matrix[j][k] = matrix[j][k] - (makeItZero * matrix[i][k]);
+                    }
+                }
+            }
+            // Since there are only up to three coefficients,
+            // It calculates it manually and insert it into ans.
+            ans = new double[lx];
+            if (lx == 3){
+                ans[2] = matrix[2][3] / matrix[2][2];
+                ans[1] = matrix[1][3] - ans[2]*matrix[1][2];
+                ans[0] = matrix[0][3] -(ans[1]*matrix[0][1] + ans[2]*matrix[0][2]);
+            }
+            else {
+                ans[1] = matrix[1][2] / matrix[1][1];
+                ans[0] = matrix[0][2] - ans[1]*matrix[0][1];
+            }
+
 		}
-		return ans;
+        //It reverses the array to represent in the correct form
+		return reverseArray(ans);
 	}
 
     /** Two polynomials functions are equal if and only if they have the same values f(x) for n+1 values of x,
