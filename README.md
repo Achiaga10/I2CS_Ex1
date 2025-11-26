@@ -15,6 +15,24 @@ between two polynomials and more.
   OpenJDK Runtime Environment Temurin-21.0.5+11 (build 21.0.5+11-LTS)
   OpenJDK 64-Bit Server VM Temurin-21.0.5+11 (build 21.0.5+11-LTS, mixed mode, sharing)
 
+## Functions
+
+- _f(double [] polynomial, double x)_ - Computes the f(x) value of the polynomial function at x.
+- _root_rec(double[] p, double x1, double x2, double eps)_ - This function computes an x value (x1<=x<=x2) for which |p(x)| < eps.
+- _PolynomFromPoints(double[] xx, double[] yy)_ - This function computes a polynomial representation from a set of 2D points on the polynom.
+- _equals(double[] p1, double[] p2)_ - returns true if p1 represents the same polynomial function as p2.
+- _poly(double[] poly)_ - Computes a String representing the polynomial function.
+- _sameValue(double[] p1, double[] p2, double x1, double x2, double eps)_ - This function computes an x value (x1<=x<=x2)
+     for which |p1(x) -p2(x)| < eps, assuming (p1(x1)-p2(x1)) * (p1(x2)-p2(x2)) <= 0.
+- _length(double[] p, double x1, double x2, int numberOfSegments)_ - This function computes an approximation of the length of the function between f(x1) and f(x2).
+- _area(double[] p1,double[]p2, double x1, double x2, int numberOfTrapezoid)_ - This function computes an approximation of the area between the polynomial functions within the x-range.
+- _getPolynomFromString(String p)_ - This function computes the array representation of a polynomial function from a String representation.
+- _add(double[] p1, double[] p2)_ - This function computes the polynomial function which is the sum of two polynomial functions (p1,p2).
+- _mul(double[] p1, double[] p2)_ - This function computes the polynomial function which is the multiplication of two polynoms (p1,p2).
+- _derivative (double[] po)_ - This function computes the derivative of the p0 polynomial function.
+- _reverseArray(double[] p)_ - This function reverses a double[] array.
+
+
 ## Usage
 ```java
 package assignments.Ex1;
@@ -53,6 +71,9 @@ double [] result = Ex1.PolynomFromPoints(xx, yy);
 // return length of polynomial in range
 double ans = Ex1.length(p, -3.82, 0, 100);
 ```
+## Result
+![alt text](https://github.com/Achiaga/I2CS_Ex1/blob/main/image.jpg?raw=true)
+
 
 ## Author
 Achia Gabbay
