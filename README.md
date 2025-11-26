@@ -72,7 +72,7 @@ double [] result = Ex1.PolynomFromPoints(xx, yy);
 double ans = Ex1.length(p, -3.82, 0, 100);
 ```
 ## Result
-![alt text](https://github.com/Achiaga/I2CS_Ex1/blob/main/image.jpg?raw=true)
+![alt text](https://github.com/Achiaga10/I2CS_Ex1/blob/main/src/images/finalresult.png)
 
 
 ## Author
