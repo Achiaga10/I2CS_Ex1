@@ -2,18 +2,14 @@
 I2CS_Ex1_proj is an assignment given by the Ariel University.
 The project deals with polynomials.
 ## Description
-This project is used mainly to deal with polynomials, calculate the f(x),
+This project is used mainly to deal with polynomials in a form of arrays. for example:
+{-1.1,2.3,3.1} represents "3.1x^2 +2.3x -1.1" polynomail.
+to deal with each polynomial,This moudle can handle multiple things like, calculate the f(x),
 find the derivative, polynomial multiplication and addition, 
 calculate the coefficients of polynomial using 2d points, find area
 between two polynomials and more.
 
 ## Getting started
-
-### Dependencies
-
-- java openjdk 21.0.5 2024-10-15 LTS
-  OpenJDK Runtime Environment Temurin-21.0.5+11 (build 21.0.5+11-LTS)
-  OpenJDK 64-Bit Server VM Temurin-21.0.5+11 (build 21.0.5+11-LTS, mixed mode, sharing)
 
 ## Functions
 
@@ -72,7 +68,10 @@ double [] result = Ex1.PolynomFromPoints(xx, yy);
 double ans = Ex1.length(p, -3.82, 0, 100);
 ```
 ## Result
+As shown in figure 1, using the above function, It calculated the area between two functions, as well as finding the derivative and more.
+
 ![alt text](https://github.com/Achiaga10/I2CS_Ex1/blob/main/src/images/finalresult.png)
+Figure 1
 
 
 ## Author
