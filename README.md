@@ -3,8 +3,8 @@ I2CS_Ex1_proj is an assignment given by the Ariel University.
 The project deals with polynomials.
 ## Description
 This project is used mainly to deal with polynomials in a form of arrays. for example:
-{-1.1,2.3,3.1} represents "3.1x^2 +2.3x -1.1" polynomail.
-to deal with each polynomial,This moudle can handle multiple things like, calculate the f(x),
+{-1.1,2.3,3.1} represents "3.1x^2 +2.3x -1.1" polynomail. 
+To deal with each polynomial,This module can handle multiple things like, calculate the f(x),
 find the derivative, polynomial multiplication and addition, 
 calculate the coefficients of polynomial using 2d points, find area
 between two polynomials and more.
